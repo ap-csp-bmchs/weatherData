@@ -17,10 +17,10 @@ for i in range(len(weather_data)):
             del weather_data[i][j - list_index_correction]
             list_index_correction += 1
         elif weather_data[i][j - list_index_correction] == '-996.00' and tmax:
-            weather_data[i][j - list_index_correction] = '42'
+            weather_data[i][j - list_index_correction] = '0'
             tmax = False
         elif weather_data[i][j - list_index_correction] == '-996.00' and tmax != True:
-            weather_data[i][j - list_index_correction] = '23'
+            weather_data[i][j - list_index_correction] = '0'
     list_index_correction = 0
     tmax = True
 #remove empty lists
@@ -37,24 +37,26 @@ highest = float(weather_data[0][2])
 lowest = float(weather_data[0][3])
 #average tmax
 for i in range(len(weather_data)):
-    tmax += int(float(weather_data[i][2]))
-    num_of_nums += 1
-tmax = int(float(tmax/num_of_nums))
+    if float(weather_data[i][2]) != 0:
+        tmax += float(weather_data[i][2])
+        num_of_nums += 1
+tmax = float(tmax/num_of_nums)
 num_of_nums = 0
 #average tmin
 for i in range(len(weather_data)):
-    tmin += int(float(weather_data[i][3]))
-    num_of_nums += 1
-tmin = int(float(tmin/num_of_nums))
+    if float(weather_data[i][2]) != 0:
+        tmin += float(weather_data[i][3])
+        num_of_nums += 1
+tmin = float(tmin/num_of_nums)
 num_of_nums = 0
 #highest temp
 for i in range(len(weather_data)):
-    if float(weather_data[i][2]) > highest:
+    if float(weather_data[i][2]) > highest and float(weather_data[i][2]) != 0:
         highest = float(weather_data[i][2])
 #lowest temp
 for i in range(len(weather_data)):
-    if float(weather_data[i][3]) < lowest:
-        lowest = float(weather_data[i][2])
+    if float(weather_data[i][3]) < lowest and float(weather_data[i][2]) != 0:
+        lowest = float(weather_data[i][3])
 
 #report data
 print ("The highest temperature for 2016 in Norman is " + str(highest) + ".")
